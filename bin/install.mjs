@@ -7,8 +7,8 @@ import { homedir } from "os";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const packageRoot = join(__dirname, "..");
-const srcSkillDir = join(packageRoot, "skills", "workflowy-sync");
-const destSkillDir = join(homedir(), ".claude", "skills", "workflowy-sync");
+const srcSkillDir = join(packageRoot, "skills", "workflowy-driver");
+const destSkillDir = join(homedir(), ".claude", "skills", "workflowy-driver");
 
 const action = process.argv[2] || "install";
 
@@ -20,7 +20,7 @@ if (action === "uninstall") {
     console.log("Nothing to uninstall.");
   }
 } else {
-  console.log("Installing workflowy-sync skill...\n");
+  console.log("Installing workflowy-driver skill...\n");
 
   copyDir(srcSkillDir, destSkillDir);
 
@@ -36,7 +36,7 @@ if (action === "uninstall") {
 
   console.log(`Installed to ${destSkillDir}\n`);
   console.log("Usage:");
-  console.log("  /workflowy-sync <node-id>\n");
+  console.log("  /workflowy-driver <node-id>\n");
   console.log("On first use, the skill will offer to configure project hooks");
   console.log("for Workflowy permission notifications.");
 }

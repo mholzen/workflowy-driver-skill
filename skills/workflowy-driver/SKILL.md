@@ -1,10 +1,10 @@
 ---
-name: workflowy-sync
-description: Sync with Workflowy to receive tasks, report progress, ask questions, and poll for new work
+name: workflowy-driver
+description: Drive tasks from Workflowy — receive work, report progress, ask questions, and poll for new tasks
 argument-hint: "<node-id>"
 ---
 
-# Workflowy Sync Skill
+# Workflowy Driver Skill
 
 You are operating in a collaborative workflow where Workflowy serves as the shared task board between you and the user. The user manages tasks in Workflowy's UI, and you execute them here.
 
@@ -12,18 +12,18 @@ You are operating in a collaborative workflow where Workflowy serves as the shar
 
 The user will invoke this skill with a Workflowy node ID:
 ```
-/workflowy-sync abc12345-uuid-here
+/workflowy-driver abc12345-uuid-here
 ```
 
 The provided ID (`$ARGUMENTS`) is your root node. All tasks and communication happen under this node.
 
 ## First-Run Setup
 
-On first invocation in a project, check if the project's `.claude/settings.json` has hooks configured for `workflowy-sync`. Look for `PermissionRequest` and `PostToolUse` hook entries referencing `workflowy-sync`.
+On first invocation in a project, check if the project's `.claude/settings.json` has hooks configured for `workflowy-driver`. Look for `PermissionRequest` and `PostToolUse` hook entries referencing `workflowy-driver`.
 
 If not configured, ask the user:
 
-> Workflowy-sync can notify your Workflowy task tree when Claude Code is awaiting permission. This requires adding two hooks to this project's `.claude/settings.json`. Would you like to enable permission notifications?
+> Workflowy-driver can notify your Workflowy task tree when Claude Code is awaiting permission. This requires adding two hooks to this project's `.claude/settings.json`. Would you like to enable permission notifications?
 
 If the user agrees, add the following to `.claude/settings.json` (create the file if needed):
 ```json
@@ -35,7 +35,7 @@ If the user agrees, add the following to `.claude/settings.json` (create the fil
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/skills/workflowy-sync/hooks/permission-alert.sh",
+            "command": "~/.claude/skills/workflowy-driver/hooks/permission-alert.sh",
             "timeout": 10
           }
         ]
@@ -47,7 +47,7 @@ If the user agrees, add the following to `.claude/settings.json` (create the fil
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/skills/workflowy-sync/hooks/permission-resolved.sh",
+            "command": "~/.claude/skills/workflowy-driver/hooks/permission-resolved.sh",
             "timeout": 10
           }
         ]
@@ -100,11 +100,11 @@ Before beginning work on a task:
 
 1. Save the root node and task ID for permission hooks:
 ```bash
-~/.claude/skills/workflowy-sync/scripts/workflowy-set-task.sh <task-id> <root-id>
+~/.claude/skills/workflowy-driver/scripts/workflowy-set-task.sh <task-id> <root-id>
 ```
 Pass both arguments when the skill is first invoked. For subsequent tasks, pass only the task ID:
 ```bash
-~/.claude/skills/workflowy-sync/scripts/workflowy-set-task.sh <task-id>
+~/.claude/skills/workflowy-driver/scripts/workflowy-set-task.sh <task-id>
 ```
 
 2. Create a status node:
